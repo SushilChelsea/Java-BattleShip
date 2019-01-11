@@ -1,6 +1,7 @@
 package org.sushil;
 
 import java.util.Arrays;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
@@ -11,16 +12,29 @@ public class Main {
 
         Scanner input = new Scanner(System.in);
 
-        /* while user input x and y co-ordinate is greater than the grid keep asking for co-ordinate*/
+        // User placing ships on the map
+        placeUserShips(oceanMap, input);
+
+
+        printMap(oceanMap); // printing the updated map
+
+        // Now Computer turn to place ship
+        compShips(oceanMap);
+
+
+
+    }
+
+    private static void placeUserShips(char[][] oceanMap, Scanner input) {
         int count = 0;
-        /* Until user place 5 ships program keeps repeating for x and y co-ordinate */
+        // Until user place 5 ships program keeps repeating for x and y co-ordinate
         while (count != 5) {
-            /* ask the user to enter in the coordinates for where to place a ship */
+            // ask the user to enter in the coordinates for where to place a ship
             System.out.print("Enter X coordinate for your ship " + (count+1) + " : ");
             int x = input.nextInt();
             System.out.print("Enter Y coordinate for your ship " + (count+1) + " : ");
             int y = input.nextInt();
-            /* Checks and prompt user to enter valid x and y co-ordinate*/
+            // Checks and prompt user to enter valid x and y co-ordinate
             while (x > 9 || y > 9) {
                 System.out.println("Please Enter co-ordinate between 0-9.");
                 System.out.print("Enter X coordinate for your ship " + (count+1) + " : ");
@@ -32,10 +46,27 @@ public class Main {
             oceanMap[x][y] = '@';   // everything ok then, update oceanMap
 
         }
+    }
 
-        printMap(oceanMap); // printing the updated map
-
-
+    private static void compShips(char[][] oceanMap) {
+        Random rand = new Random();
+        int compCounter = 0;
+        System.out.println();
+        System.out.println("Computer is deploying ships");
+        // Until an unless computer deploys 5 ships keep repeating
+        while (compCounter != 5) {
+            int x = rand.nextInt(9);
+            int y = rand.nextInt(9);
+            // while x and y coordinate finds any of these char keep changing coordinates
+            while (oceanMap[x][y] == '@'|| oceanMap[x][y] == 'x') {
+                x = rand.nextInt(9);
+                y = rand.nextInt(9);
+            }
+            oceanMap[x][y] = 'x';   // place computer ship sign to map
+            System.out.println(compCounter+1 + ". ship DEPLOYED ");
+            compCounter++;      // update computer counter
+        }
+        System.out.println();
     }
 
     private static void printMap(char[][] oceanMap) {
@@ -45,7 +76,10 @@ public class Main {
             for (int c = 0; c < 10; c++) {
                 if (oceanMap[r][c] == '@') {
                     System.out.print(oceanMap[r][c]);
-                } else {
+                } else if (oceanMap[r][c] == 'x') {
+                    System.out.print(oceanMap[r][c]);
+                }
+                else {
                     System.out.print(' ');
                 }
 
