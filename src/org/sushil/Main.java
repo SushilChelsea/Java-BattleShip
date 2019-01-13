@@ -33,9 +33,6 @@ public class Main {
         int userShips = 5;
         int compShips = 5;
 
-        ArrayList<Integer> markedXCoordinate= new ArrayList<Integer>();
-        ArrayList<Integer> markedYCoordinate= new ArrayList<Integer>();
-
         while (userShips != 0 && compShips != 0) {
             while (playerGuessXcoordinate > 9 || playerGuessYcoordinate > 9) {
                 System.out.println("Please Enter co-ordinate between 0-9.");
@@ -66,8 +63,6 @@ public class Main {
                 System.out.println("Sorry, you missed ");
                 System.out.println();
             }
-            markedXCoordinate.add(playerGuessXcoordinate);
-            markedYCoordinate.add(playerGuessYcoordinate);
 
             // Now Computer Guess turn
             Random rand = new Random();
